@@ -2,6 +2,7 @@ package org.daf.data_structures;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import org.daf.common.DafException;
  * @author Asher Stern
  *
  */
-public final class Document implements Serializable
+public final class Document implements Serializable, Iterable<Annotation<?>>
 {
 	public Document(String name, String text)
 	{
@@ -64,7 +65,7 @@ public final class Document implements Serializable
 	
 	public synchronized <T extends AnnotationContents> T addAnnotation(int begin, int end, T annotationContents)
 	{
-		if ((begin<0)||(end<1)||(end<=begin)) {throw new DafException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
+		if ((begin<0)||(end<0)||(end<begin)) {throw new DafException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
 		if (end>text.length()) {throw new DafException("Illegal end value. end>text.length(). end="+end+". text.length()="+text.length()+".");}
 		if (null==annotationContents) {throw new DafException("Null annotationContents");}
 		
@@ -77,6 +78,45 @@ public final class Document implements Serializable
 		
 		throw new DafException("Not yet implemented.");
 	}
+	
+	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass, int begin, int end)
+	{
+		if ((begin<0)||(end<0)||(end<begin)) {throw new DafException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
+		if (null==superClass) {throw new DafException("Null superClass");}
+		
+		throw new DafException("Not yet implemented.");
+	}
+	
+	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass, int begin)
+	{
+		return iterator(superClass, begin, text.length());
+	}
+	
+	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass)
+	{
+		return iterator(superClass, 0, text.length());
+	}
+	
+	@Override
+	public Iterator<Annotation<? extends AnnotationContents>> iterator()
+	{
+		return iterator(AnnotationContents.class);
+	}
+	
+	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin, int end)
+	{
+		return ()->iterator(superClass, begin, end);
+	}
+	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin)
+	{
+		return ()->iterator(superClass, begin);
+	}
+	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass)
+	{
+		return ()->iterator(superClass);
+	}
+	
+	
 	
 	
 

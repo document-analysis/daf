@@ -27,7 +27,7 @@ public final class Annotation<T extends AnnotationContents> implements Serializa
 		super();
 		if (null==document) {throw new DafException("Null document");}
 		if (null==annotationContents) {throw new DafException("Null annotationContents");}
-		if (end<=begin) {throw new DafException("end <= begin. begin="+begin+". end="+end+".");}
+		if (end<begin) {throw new DafException("end < begin. begin="+begin+". end="+end+".");}
 		this.document = document;
 		this.begin = begin;
 		this.end = end;
