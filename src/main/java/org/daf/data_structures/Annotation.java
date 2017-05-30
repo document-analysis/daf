@@ -5,7 +5,13 @@ import java.io.Serializable;
 import org.daf.common.DafException;
 
 /**
+ * Annotation is a span of a document, with {@link AnnotationContents} attached to it.
  * 
+ * <p>
+ * {@link Annotation} is immutable, and is created by {@link Document#addAnnotation(int, int, AnnotationContents)}.
+ * <br>
+ * Each {@link Annotation} is unique, and cannot be shared among {@link Document}s. Note, however, that the
+ * {@link AnnotationContents} <b>can</b> be shared among multiple {@link Annotation}s and multiple {@link Document}s.
  *
  * <p>
  * Date: 30 May 2017
@@ -16,7 +22,7 @@ public final class Annotation<T extends AnnotationContents> implements Serializa
 {
 	private static final long serialVersionUID = 1750027436005437477L;
 	
-	public Annotation(Document document, int begin, int end, long uniqueId, T annotationContents)
+	Annotation(Document document, int begin, int end, long uniqueId, T annotationContents)
 	{
 		super();
 		if (null==document) {throw new DafException("Null document");}

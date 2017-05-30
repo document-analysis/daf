@@ -1,6 +1,7 @@
 package org.daf.data_structures;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public final class DocumentCollection implements Serializable
 	{
 	}
 	
-	public void addDocument(String name, Document document)
+	public synchronized void addDocument(String name, Document document)
 	{
 		if (null==name) {throw new DafException("Null name");}
 		if (null==document) {throw new DafException("Null document");}
@@ -30,16 +31,22 @@ public final class DocumentCollection implements Serializable
 		mapNameToDocument.put(name, document);
 	}
 
-	public boolean contains(String name)
+	public synchronized boolean contains(String name)
 	{
 		return mapNameToDocument.containsKey(name);
 	}
 	
-	public Document getDocument(String name)
+	public synchronized Document getDocument(String name)
 	{
 		if (!mapNameToDocument.containsKey(name)) {throw new DafException("This document collection does not contain a document named: \""+name+"\".");}
 		return mapNameToDocument.get(name);
 	}
+	
+	public Map<String, Document> getMapNameToDocument()
+	{
+		return Collections.unmodifiableMap(mapNameToDocument);
+	}
+
 
 	private final Map<String, Document> mapNameToDocument = new LinkedHashMap<>();
 }
