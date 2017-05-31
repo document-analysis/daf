@@ -2,6 +2,7 @@ package org.daf.data_structures;
 
 import java.io.Serializable;
 
+import org.daf.common.DafAPI;
 import org.daf.common.DafException;
 
 /**
@@ -18,7 +19,8 @@ import org.daf.common.DafException;
  * @author Asher Stern
  *
  */
-public final class Annotation<T extends AnnotationContents> implements Serializable
+@DafAPI
+public final class Annotation<T extends AnnotationContents> implements UniquelyIdentifiedItem, Serializable
 {
 	private static final long serialVersionUID = 1750027436005437477L;
 	
@@ -35,30 +37,40 @@ public final class Annotation<T extends AnnotationContents> implements Serializa
 		this.annotationContents = annotationContents;
 	}
 	
-	
+	@DafAPI
 	public Document getDocument()
 	{
 		return document;
 	}
 
+	@DafAPI
 	public int getBegin()
 	{
 		return begin;
 	}
 
+	@DafAPI
 	public int getEnd()
 	{
 		return end;
 	}
 
+	@Override
 	public long getUniqueId()
 	{
 		return uniqueId;
 	}
 
+	@DafAPI
 	public T getAnnotationContents()
 	{
 		return annotationContents;
+	}
+	
+	@DafAPI
+	public AnnotationReference getAnnotationReference()
+	{
+		return new AnnotationReference(document.getName(), uniqueId);
 	}
 	
 	

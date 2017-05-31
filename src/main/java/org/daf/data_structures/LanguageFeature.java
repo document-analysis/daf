@@ -1,5 +1,6 @@
 package org.daf.data_structures;
 
+import org.daf.common.DafAPI;
 import org.daf.common.DafException;
 
 /**
@@ -24,12 +25,14 @@ import org.daf.common.DafException;
  * @author Asher Stern
  *
  */
+@DafAPI
 public class LanguageFeature implements Feature
 {
 	private static final long serialVersionUID = 1631499711285682349L;
 	
 	public static final String NAME = "languague";
 
+	@DafAPI
 	public LanguageFeature(String language)
 	{
 		super();
@@ -37,6 +40,7 @@ public class LanguageFeature implements Feature
 		this.language = language;
 	}
 	
+	@DafAPI
 	public String getLanguage()
 	{
 		return language;

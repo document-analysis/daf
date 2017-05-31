@@ -1,4 +1,4 @@
-package org.daf.index;
+package org.daf.common;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -15,6 +15,7 @@ import java.util.NoSuchElementException;
  */
 public abstract class OneStepAheadIterator<T> implements Iterator<T>
 {
+	
 	@Override
 	public synchronized final boolean hasNext()
 	{
@@ -29,6 +30,15 @@ public abstract class OneStepAheadIterator<T> implements Iterator<T>
 		findNext();
 		return ret;
 	}
+	
+	/**
+	 * This method must be called from the constructor.
+	 */
+	protected final void init()
+	{
+		findNext();
+	}
+
 
 
 	/**

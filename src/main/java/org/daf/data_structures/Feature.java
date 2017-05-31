@@ -2,6 +2,8 @@ package org.daf.data_structures;
 
 import java.io.Serializable;
 
+import org.daf.common.DafAPI;
+
 
 /**
  * A feature is a property of a document. A feature is <b>not</b> an annotation, it does not
@@ -13,6 +15,7 @@ import java.io.Serializable;
  * @author Asher Stern
  *
  */
+@DafAPI
 public interface Feature extends Serializable
 {
 
