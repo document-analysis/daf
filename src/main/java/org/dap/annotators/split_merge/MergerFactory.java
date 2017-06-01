@@ -1,7 +1,7 @@
-package org.daf.annotators.split_merge;
+package org.dap.annotators.split_merge;
 
-import org.daf.common.DafAPI;
-import org.daf.data_structures.Document;
+import org.dap.common.DapAPI;
+import org.dap.data_structures.Document;
 
 /**
  * Constructs a new {@link Merger} for each document.
@@ -12,7 +12,7 @@ import org.daf.data_structures.Document;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public abstract class MergerFactory implements AutoCloseable
 {
 	/**
@@ -21,6 +21,6 @@ public abstract class MergerFactory implements AutoCloseable
 	 * @param document a base-document to process.
 	 * @return a new {@link Merger} for the given base-document.
 	 */
-	@DafAPI
+	@DapAPI
 	public abstract Merger createMerger(Document document);
 }

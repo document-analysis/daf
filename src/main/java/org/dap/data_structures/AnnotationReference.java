@@ -1,8 +1,8 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
 import java.io.Serializable;
 
-import org.daf.common.DafAPI;
+import org.dap.common.DapAPI;
 
 /**
  * 
@@ -12,7 +12,7 @@ import org.daf.common.DafAPI;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public final class AnnotationReference implements Serializable
 {
 	private static final long serialVersionUID = 9219843096448580409L;

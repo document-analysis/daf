@@ -1,4 +1,4 @@
-package org.daf.common;
+package org.dap.common;
 
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Target({ TYPE, FIELD, METHOD, CONSTRUCTOR })
-public @interface DafAPI
+public @interface DapAPI
 {
 
 }

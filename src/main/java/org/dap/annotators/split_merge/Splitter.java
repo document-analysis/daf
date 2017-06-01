@@ -1,9 +1,9 @@
-package org.daf.annotators.split_merge;
+package org.dap.annotators.split_merge;
 
 import java.util.Iterator;
 
-import org.daf.common.DafAPI;
-import org.daf.data_structures.Document;
+import org.dap.common.DapAPI;
+import org.dap.data_structures.Document;
 
 /**
  * Generates new documents from a given document.
@@ -14,7 +14,7 @@ import org.daf.data_structures.Document;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public abstract class Splitter implements AutoCloseable
 {
 	/**
@@ -22,6 +22,6 @@ public abstract class Splitter implements AutoCloseable
 	 * @param document the given document
 	 * @return iterator over the newly-generated documents.
 	 */
-	@DafAPI
+	@DapAPI
 	public abstract Iterator<Document> split(Document document);
 }

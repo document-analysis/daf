@@ -1,4 +1,4 @@
-package org.daf.index;
+package org.dap.index;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.daf.common.DafException;
-import org.daf.data_structures.UniquelyIdentifiedItem;
+import org.dap.common.DapException;
+import org.dap.data_structures.UniquelyIdentifiedItem;
 
 /**
  * 
@@ -49,11 +49,11 @@ public class Index<T extends UniquelyIdentifiedItem>
 	public synchronized void remove(Class<?> cls, int begin, int end, T item)
 	{
 		SortedMap<Integer, SortedMap<Integer, Set<T>>> clsMap = map.get(cls);
-		if (null==clsMap) {throw new DafException("Tried to remove an item that does not exist.");}
+		if (null==clsMap) {throw new DapException("Tried to remove an item that does not exist.");}
 		SortedMap<Integer, Set<T>> beginMap = clsMap.get(begin);
-		if (null==beginMap) {throw new DafException("Tried to remove an item that does not exist.");}
+		if (null==beginMap) {throw new DapException("Tried to remove an item that does not exist.");}
 		Set<T> items = beginMap.get(end);
-		if (null==items) {throw new DafException("Tried to remove an item that does not exist.");}
+		if (null==items) {throw new DapException("Tried to remove an item that does not exist.");}
 		for (T anItem : items)
 		{
 			if (item.getUniqueId()==anItem.getUniqueId())

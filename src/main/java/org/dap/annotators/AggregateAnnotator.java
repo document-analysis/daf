@@ -1,12 +1,12 @@
-package org.daf.annotators;
+package org.dap.annotators;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.daf.common.DafAPI;
-import org.daf.common.TopologicalSort;
-import org.daf.data_structures.Document;
+import org.dap.common.DapAPI;
+import org.dap.common.TopologicalSort;
+import org.dap.data_structures.Document;
 
 /**
  * An annotator which encapsulates several underlying annotators.
@@ -21,14 +21,14 @@ import org.daf.data_structures.Document;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public class AggregateAnnotator extends Annotator
 {
 	/**
 	 * Constructor with a sequential list of underlying annotators.
 	 * @param annotators underlying annotators.
 	 */
-	@DafAPI
+	@DapAPI
 	public AggregateAnnotator(List<Annotator> annotators)
 	{
 		super();
@@ -47,7 +47,7 @@ public class AggregateAnnotator extends Annotator
 	 * 
 	 * @param annotatorWithDependencies map whose keys are annotators, which are mapped to the annotators on which they depend.
 	 */
-	@DafAPI
+	@DapAPI
 	public AggregateAnnotator(Map<Annotator, Set<Annotator>> annotatorWithDependencies)
 	{
 		annotators = new TopologicalSort<>(annotatorWithDependencies).sort();
@@ -57,7 +57,7 @@ public class AggregateAnnotator extends Annotator
 	 * Process the given document, by delegating to the {@link Annotator#annotate(Document)} methods
 	 * of each of the underlying annotators. 
 	 */
-	@DafAPI
+	@DapAPI
 	@Override
 	public void annotate(Document document)
 	{

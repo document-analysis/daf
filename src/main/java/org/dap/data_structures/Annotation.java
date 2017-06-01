@@ -1,9 +1,9 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
 import java.io.Serializable;
 
-import org.daf.common.DafAPI;
-import org.daf.common.DafException;
+import org.dap.common.DapAPI;
+import org.dap.common.DapException;
 
 /**
  * Annotation is a span of a document, with {@link AnnotationContents} attached to it.
@@ -19,7 +19,7 @@ import org.daf.common.DafException;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public final class Annotation<T extends AnnotationContents> implements UniquelyIdentifiedItem, Serializable
 {
 	private static final long serialVersionUID = 1750027436005437477L;
@@ -27,9 +27,9 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 	Annotation(Document document, int begin, int end, long uniqueId, T annotationContents)
 	{
 		super();
-		if (null==document) {throw new DafException("Null document");}
-		if (null==annotationContents) {throw new DafException("Null annotationContents");}
-		if (end<begin) {throw new DafException("end < begin. begin="+begin+". end="+end+".");}
+		if (null==document) {throw new DapException("Null document");}
+		if (null==annotationContents) {throw new DapException("Null annotationContents");}
+		if (end<begin) {throw new DapException("end < begin. begin="+begin+". end="+end+".");}
 		this.document = document;
 		this.begin = begin;
 		this.end = end;
@@ -37,19 +37,19 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 		this.annotationContents = annotationContents;
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Document getDocument()
 	{
 		return document;
 	}
 
-	@DafAPI
+	@DapAPI
 	public int getBegin()
 	{
 		return begin;
 	}
 
-	@DafAPI
+	@DapAPI
 	public int getEnd()
 	{
 		return end;
@@ -61,13 +61,13 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 		return uniqueId;
 	}
 
-	@DafAPI
+	@DapAPI
 	public T getAnnotationContents()
 	{
 		return annotationContents;
 	}
 	
-	@DafAPI
+	@DapAPI
 	public AnnotationReference getAnnotationReference()
 	{
 		return new AnnotationReference(document.getName(), uniqueId);

@@ -1,7 +1,7 @@
-package org.daf.annotators.split_merge;
+package org.dap.annotators.split_merge;
 
-import org.daf.common.DafAPI;
-import org.daf.data_structures.Document;
+import org.dap.common.DapAPI;
+import org.dap.data_structures.Document;
 
 /**
  * A merger processes a base-document, provided in its constructor, along with additional documents, provided in
@@ -24,22 +24,22 @@ import org.daf.data_structures.Document;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public abstract class Merger
 {
-	@DafAPI
+	@DapAPI
 	public Merger(Document document)
 	{
 		super();
 		this.document = document;
 	}
 	
-	@DafAPI
+	@DapAPI
 	public abstract void accumulate(Document document);
 	
-	@DafAPI
+	@DapAPI
 	public abstract void conclude();
 
-	@DafAPI
+	@DapAPI
 	protected final Document document;
 }

@@ -1,4 +1,4 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -7,9 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.daf.common.DafAPI;
-import org.daf.common.DafException;
-import org.daf.index.Index;
+import org.dap.common.DapAPI;
+import org.dap.common.DapException;
+import org.dap.index.Index;
 
 /**
  * 
@@ -19,23 +19,23 @@ import org.daf.index.Index;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public final class Document implements Serializable, Iterable<Annotation<?>>
 {
 	private static final long serialVersionUID = -6556213855743551941L;
 	
-	@DafAPI
+	@DapAPI
 	public Document(String name, String text)
 	{
 		this(name, new DocumentCollection(), text);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Document(String name, DocumentCollection documentCollection, String text)
 	{
-		if (null==name) {throw new DafException("Null name");}
-		if (null==documentCollection) {throw new DafException("Null documentCollection");}
-		if (null==text) {throw new DafException("Null text");}
+		if (null==name) {throw new DapException("Null name");}
+		if (null==documentCollection) {throw new DapException("Null documentCollection");}
+		if (null==text) {throw new DapException("Null text");}
 		
 		synchronized(documentCollection)
 		{
@@ -48,51 +48,51 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 	}
 	
 
-	@DafAPI
+	@DapAPI
 	public String getName()
 	{
 		return name;
 	}
 
-	@DafAPI
+	@DapAPI
 	public DocumentCollection getDocumentCollection()
 	{
 		return documentCollection;
 	}
 	
-	@DafAPI
+	@DapAPI
 	public String getText()
 	{
 		return text;
 	}
 
-	@DafAPI
+	@DapAPI
 	public synchronized void setFeature(String name, Feature feature)
 	{
-		if (null==name) {throw new DafException("Null name");}
-		if (null==feature) {throw new DafException("Null feature");}
+		if (null==name) {throw new DapException("Null name");}
+		if (null==feature) {throw new DapException("Null feature");}
 		features.put(name, feature);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized void removeFeature(String name)
 	{
-		if (null==name) {throw new DafException("Null name");}
+		if (null==name) {throw new DapException("Null name");}
 		features.remove(name);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized Map<String, Feature> getFeatures()
 	{
 		return Collections.unmodifiableMap(features);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized <T extends AnnotationContents> AnnotationReference addAnnotation(int begin, int end, T annotationContents)
 	{
-		if ((begin<0)||(end<0)||(end<begin)) {throw new DafException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
-		if (end>text.length()) {throw new DafException("Illegal end value. end>text.length(). end="+end+". text.length()="+text.length()+".");}
-		if (null==annotationContents) {throw new DafException("Null annotationContents");}
+		if ((begin<0)||(end<0)||(end<begin)) {throw new DapException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
+		if (end>text.length()) {throw new DapException("Illegal end value. end>text.length(). end="+end+". text.length()="+text.length()+".");}
+		if (null==annotationContents) {throw new DapException("Null annotationContents");}
 		
 		final long uniqueId = nextUniqueId.getAndIncrement();
 		Class<?> cls = annotationContents.getClass();
@@ -104,32 +104,32 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 		return new AnnotationReference(getName(), uniqueId);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized void removeAnnotation(AnnotationReference annotationReference)
 	{
-		if (null==annotationReference) {throw new DafException("Null annotation");}
+		if (null==annotationReference) {throw new DapException("Null annotation");}
 		
 		final Annotation<?> annotation = annotationsById.get(annotationReference.getAnnotationUniqueId());
-		if (null==annotation) {throw new DafException("Tried to remove an annotation that does not exist.");}
+		if (null==annotation) {throw new DapException("Tried to remove an annotation that does not exist.");}
 		
 		Class<?> cls = annotation.getAnnotationContents().getClass();
 		index.remove(cls, annotation.getBegin(), annotation.getEnd(), annotation);
 		annotationsById.remove(annotation.getUniqueId());
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized void removeAnnotation(Annotation<?> annotation)
 	{
 		removeAnnotation(annotation.getAnnotationReference());
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized boolean isAnnotationExist(AnnotationReference annotationReference)
 	{
 		return isAnnotationExist(annotationReference, false);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized boolean isAnnotationExist(AnnotationReference annotationReference, boolean inThisDocumentOnly)
 	{
 		if (name.equals(annotationReference.getDocumentName()))
@@ -149,13 +149,13 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 		}
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized Annotation<?> findAnnotation(AnnotationReference annotationReference)
 	{
 		return findAnnotation(annotationReference, false);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized Annotation<?> findAnnotation(AnnotationReference annotationReference, boolean inThisDocumentOnly)
 	{
 		if (name.equals(annotationReference.getDocumentName()))
@@ -166,14 +166,14 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 			}
 			else
 			{
-				throw new DafException("Tried to find an annotation that does not exist: "+annotationReference);
+				throw new DapException("Tried to find an annotation that does not exist: "+annotationReference);
 			}
 		}
 		else
 		{
 			if (inThisDocumentOnly)
 			{
-				throw new DafException("Tried to find an annotation that does not exist: "+annotationReference);
+				throw new DapException("Tried to find an annotation that does not exist: "+annotationReference);
 			}
 			else
 			{
@@ -182,47 +182,47 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 		}
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass, int begin, int end)
 	{
-		if ((begin<0)||(end<0)||(end<begin)) {throw new DafException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
-		if (null==superClass) {throw new DafException("Null superClass");}
+		if ((begin<0)||(end<0)||(end<begin)) {throw new DapException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
+		if (null==superClass) {throw new DapException("Null superClass");}
 		
 		return index.iterator(superClass, begin, end);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass, int begin)
 	{
 		return iterator(superClass, begin, text.length());
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass)
 	{
 		return iterator(superClass, 0, text.length());
 	}
 	
-	@DafAPI
+	@DapAPI
 	@Override
 	public Iterator<Annotation<? extends AnnotationContents>> iterator()
 	{
 		return iterator(AnnotationContents.class);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin, int end)
 	{
 		return ()->iterator(superClass, begin, end);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin)
 	{
 		return ()->iterator(superClass, begin);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass)
 	{
 		return ()->iterator(superClass);

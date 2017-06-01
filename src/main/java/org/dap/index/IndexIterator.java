@@ -1,10 +1,10 @@
-package org.daf.index;
+package org.dap.index;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import org.daf.common.OneStepAheadIterator;
+import org.dap.common.OneStepAheadIterator;
 
 /**
  * 

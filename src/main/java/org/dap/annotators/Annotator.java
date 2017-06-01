@@ -1,7 +1,7 @@
-package org.daf.annotators;
+package org.dap.annotators;
 
-import org.daf.common.DafAPI;
-import org.daf.data_structures.Document;
+import org.dap.common.DapAPI;
+import org.dap.data_structures.Document;
 
 /**
  * Superclass for all annotators.
@@ -14,14 +14,14 @@ import org.daf.data_structures.Document;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public class Annotator implements AutoCloseable
 {
 	/**
 	 * Perform some processing on the given document.
 	 * @param document the document to process.
 	 */
-	@DafAPI
+	@DapAPI
 	public void annotate(Document document)
 	{
 		// Override this method.
@@ -31,7 +31,7 @@ public class Annotator implements AutoCloseable
 	 * (non-Javadoc)
 	 * @see java.lang.AutoCloseable#close()
 	 */
-	@DafAPI
+	@DapAPI
 	@Override
 	public void close() 
 	{

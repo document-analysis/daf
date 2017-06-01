@@ -1,12 +1,12 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.daf.common.DafAPI;
-import org.daf.common.DafException;
+import org.dap.common.DapAPI;
+import org.dap.common.DapException;
 
 /**
  * 
@@ -16,53 +16,53 @@ import org.daf.common.DafException;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public final class DocumentCollection implements Serializable
 {
 	private static final long serialVersionUID = -5837775355471567286L;
 
-	@DafAPI
+	@DapAPI
 	public DocumentCollection()
 	{
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized void addDocument(String name, Document document)
 	{
-		if (null==name) {throw new DafException("Null name");}
-		if (null==document) {throw new DafException("Null document");}
-		if (mapNameToDocument.containsKey(name)) {throw new DafException("A document named \""+name+"\" already exists in this document collection.");}
+		if (null==name) {throw new DapException("Null name");}
+		if (null==document) {throw new DapException("Null document");}
+		if (mapNameToDocument.containsKey(name)) {throw new DapException("A document named \""+name+"\" already exists in this document collection.");}
 		mapNameToDocument.put(name, document);
 	}
 
-	@DafAPI
+	@DapAPI
 	public synchronized boolean contains(String name)
 	{
 		return mapNameToDocument.containsKey(name);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized Document getDocument(String name)
 	{
-		if (!mapNameToDocument.containsKey(name)) {throw new DafException("This document collection does not contain a document named: \""+name+"\".");}
+		if (!mapNameToDocument.containsKey(name)) {throw new DapException("This document collection does not contain a document named: \""+name+"\".");}
 		return mapNameToDocument.get(name);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized Map<String, Document> getMapNameToDocument()
 	{
 		return Collections.unmodifiableMap(mapNameToDocument);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized Annotation<?> findAnnotation(AnnotationReference annotationReference)
 	{
 		final String documentName = annotationReference.getDocumentName();
-		if (!mapNameToDocument.containsKey(documentName)) {throw new DafException("Tried to find an annotation that does not exist: "+annotationReference);}
+		if (!mapNameToDocument.containsKey(documentName)) {throw new DapException("Tried to find an annotation that does not exist: "+annotationReference);}
 		return mapNameToDocument.get(documentName).findAnnotation(annotationReference, true);
 	}
 	
-	@DafAPI
+	@DapAPI
 	public synchronized boolean isAnnotationExist(AnnotationReference annotationReference)
 	{
 		final String documentName = annotationReference.getDocumentName();

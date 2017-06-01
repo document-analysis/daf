@@ -1,8 +1,8 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
 import java.io.Serializable;
 
-import org.daf.common.DafAPI;
+import org.dap.common.DapAPI;
 
 /**
  * Base-class for all annotation-contents types.
@@ -12,7 +12,7 @@ import org.daf.common.DafAPI;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 @SuppressWarnings("serial")
 public abstract class AnnotationContents implements Serializable
 {

@@ -1,13 +1,13 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
-import org.daf.common.DafAPI;
-import org.daf.common.DafException;
+import org.dap.common.DapAPI;
+import org.dap.common.DapException;
 
 /**
  * The language-feature indicates the language of the document (e.g., English, French, etc.).
  * 
  * <p>
- * The usage of a language-feature is expected to be very common, so the framework provides this
+ * The usage of a language-feature is expected to be very common, so the platform provides this
  * built-in implementation.
  * <br>
  * Users are encouraged to use this implementation, and not develop their own custom implementation
@@ -25,22 +25,22 @@ import org.daf.common.DafException;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public class LanguageFeature implements Feature
 {
 	private static final long serialVersionUID = 1631499711285682349L;
 	
 	public static final String NAME = "languague";
 
-	@DafAPI
+	@DapAPI
 	public LanguageFeature(String language)
 	{
 		super();
-		if (null==language) {throw new DafException("Null language");}
+		if (null==language) {throw new DapException("Null language");}
 		this.language = language;
 	}
 	
-	@DafAPI
+	@DapAPI
 	public String getLanguage()
 	{
 		return language;

@@ -1,8 +1,8 @@
-package org.daf.data_structures;
+package org.dap.data_structures;
 
 import java.io.Serializable;
 
-import org.daf.common.DafAPI;
+import org.dap.common.DapAPI;
 
 
 /**
@@ -15,7 +15,7 @@ import org.daf.common.DafAPI;
  * @author Asher Stern
  *
  */
-@DafAPI
+@DapAPI
 public interface Feature extends Serializable
 {
 
