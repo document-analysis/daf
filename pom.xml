@@ -4,7 +4,7 @@
   <groupId>org.dap</groupId>
   <artifactId>dap</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>daf</name>
+  <name>dap</name>
   <description>Document Analysis Platform</description>
   
   	<properties>
