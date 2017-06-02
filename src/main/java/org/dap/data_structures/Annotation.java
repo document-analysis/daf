@@ -35,6 +35,7 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 		this.end = end;
 		this.uniqueId = uniqueId;
 		this.annotationContents = annotationContents;
+		this.coveredText = document.getText().substring(begin, end);
 	}
 	
 	@DapAPI
@@ -73,10 +74,19 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 		return new AnnotationReference(document.getName(), uniqueId);
 	}
 	
-	
+	@DapAPI
+	public String getCoveredText()
+	{
+		return coveredText;
+	}
+
+
+
+
 	private final Document document;
 	private final int begin;
 	private final int end;
 	private final long uniqueId;
 	private final T annotationContents;
+	private final String coveredText;
 }
