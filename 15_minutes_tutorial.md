@@ -144,8 +144,10 @@ for (Annotation<?> annotation : document.iterable(Sentence.class))
 	System.out.println(annotation.getCoveredText());
 }
 ```
-This will print:
->This is a document.
+will print:
+```text
+This is a document.
+```
 
 ```java
 for (Annotation<?> annotation : document.iterable(Token.class))
@@ -154,10 +156,12 @@ for (Annotation<?> annotation : document.iterable(Token.class))
 }
 ```
 will print
->This
->is
->a
->document
+```text
+This
+is
+a
+document
+```
 
 And just for the sake of completeness:
 ```java
@@ -167,11 +171,13 @@ for (Annotation<?> annotation : document)
 }
 ```
 will print
->This
->is
->a
->document
->This is a document.
+```text
+This
+This is a document.
+is
+a
+document
+```
 
 It is also possible to narrow down the iteration to a portion of the document, by providing the arguments `begin` and `end` to the `iterator()` and `iterable()` methods. These arguments specify that only annotations that begin where specified by the `begin` parameter or afterwards, and end where specified by the `end` parameter or before, will be returned.
 
@@ -183,8 +189,10 @@ for (Annotation<?> annotation : document.iterable(AnnotationContents.class, 0, 8
 }
 ```
 will print
->This
->is
+```text
+This
+is
+```
 
 ### Document Features
 In addition to annotations, documents may also have _features_, which hold some general information about the document. Features are totally user-defined, by implementing the interface `org.dap.data_structures.Feature`.
