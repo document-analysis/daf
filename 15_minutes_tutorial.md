@@ -235,7 +235,7 @@ The platform addresses such scenarios with the mechanism of `DocumentCollection`
 Here are some facts you need to know about `DocumentCollection`
 
 1. When a `Document` is created, it is added into a `DocumentCollection`. The `DocumentCollection` is specified as an argument in the `Document`'s constructor. If that argument is omitted, a default new `DocumentCollection` is created for the document.
-2. A document cannot be "moved" to another `DocumentCollection`. One the document has been constructed and added to a `DocumentCollection`, it will belong to that `DocumentCollection` forever.
+2. A document cannot be "moved" to another `DocumentCollection`. Once the document has been constructed and added to a `DocumentCollection`, it will belong to that `DocumentCollection` forever.
 3. The `DocumentCollection` of a document can be retrieved by `Document`'s method `getDocumentCollection()`.
 4. The `Document`'s `findAnnotation()` method can get references to annotations that reside in another document, as long as that document belongs to the same `DocumentCollection`. This behavior can be changed by setting the method's argument `inThisDocumentOnly` to `true`.
 5. The same applies to `isAnnotationExist()`.
