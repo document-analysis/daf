@@ -17,8 +17,8 @@ import org.dap.common.DapException;
  * in a {@link Document}, in {@link Document#setFeature(String, Feature)}.
  * 
  * <p>
- * Example code:<br>
- * <code>document.setFeature(LanguageFeature.NAME, new LanguageFeature("en"));</code>
+ * Convenient methods to easily set and get the document-language are provided here by the public static
+ * methods: {@link #setDocumentLanguage(Document, String)} and {@link #getDocumentLanguage(Document)}. 
  *
  * <p>
  * Date: 30 May 2017
@@ -32,6 +32,33 @@ public class LanguageFeature implements Feature
 	
 	public static final String NAME = "languague";
 
+	/**
+	 * Convenient method to get the document language.
+	 * @param document a document
+	 * @return the document language, if it has been set, or null.
+	 */
+	@DapAPI
+	public static String getDocumentLanguage(Document document)
+	{
+		Feature feature = document.getFeatures().get(NAME);
+		if ( (null==feature) || (!(feature instanceof LanguageFeature)) )
+		{
+			return null;
+		}
+		return ((LanguageFeature)feature).getLanguage();
+	}
+	
+	/**
+	 * Convenient method to set the document language.
+	 * @param document a document
+	 * @param language the language to set to this document.
+	 */
+	@DapAPI
+	public static void setDocumentLanguage(Document document, String language)
+	{
+		document.setFeature(NAME, new LanguageFeature(language));
+	}
+	
 	@DapAPI
 	public LanguageFeature(String language)
 	{

@@ -44,7 +44,7 @@ public class BeginEndIterator<T> extends OneStepAheadIterator<BeginEndEncapsulat
 				else
 				{
 					currentBegin = beginIterator.next();
-					endIterator = map.get(currentBegin).headMap(end).keySet().iterator();
+					endIterator = map.get(currentBegin).headMap(end+1).keySet().iterator();
 				}
 			}
 			currentEnd = endIterator.next();
