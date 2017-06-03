@@ -144,7 +144,7 @@ for (Annotation<?> annotation : document.iterable(Sentence.class))
 	System.out.println(annotation.getCoveredText());
 }
 ```
-This will print:
+will print:
 ```text
 This is a document.
 ```
@@ -173,10 +173,10 @@ for (Annotation<?> annotation : document)
 will print
 ```text
 This
+This is a document.
 is
 a
 document
-This is a document.
 ```
 
 It is also possible to narrow down the iteration to a portion of the document, by providing the arguments `begin` and `end` to the `iterator()` and `iterable()` methods. These arguments specify that only annotations that begin where specified by the `begin` parameter or afterwards, and end where specified by the `end` parameter or before, will be returned.
