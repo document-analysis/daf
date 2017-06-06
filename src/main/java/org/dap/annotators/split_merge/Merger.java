@@ -27,6 +27,10 @@ import org.dap.data_structures.Document;
 @DapAPI
 public abstract class Merger
 {
+	/**
+	 * Constructor with the base-document
+	 * @param document the base-document
+	 */
 	@DapAPI
 	public Merger(Document document)
 	{
@@ -34,12 +38,25 @@ public abstract class Merger
 		this.document = document;
 	}
 	
+	/**
+	 * This method is called for each additional document (but not for the base-document). The method should be implemented
+	 * as some processing (or information-gathering) that uses the given additional-document.
+	 * @param document additional-document.
+	 */
 	@DapAPI
 	public abstract void accumulate(Document document);
 	
+	/**
+	 * This method is called <b>after</b> all the additional-documents have been provided to the {@link #accumulate(Document)} method.
+	 * This method should be implemented as final processing of the base-document (possibly using the information gathered
+	 * during the {@link #accumulate(Document)} invokations).
+	 */
 	@DapAPI
 	public abstract void conclude();
 
+	/**
+	 * The base-document.
+	 */
 	@DapAPI
 	protected final Document document;
 }

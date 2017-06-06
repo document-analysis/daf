@@ -12,7 +12,16 @@ import org.dap.common.DapException;
 import org.dap.index.Index;
 
 /**
+ * Document is a data-structure that contains:
+ * <ol>
+ * <li>text</li>
+ * <li>annotations</li>
+ * <li>features</li>
+ * </ol>
  * 
+ * The most important functionality of {@link Document}s is to iterate over annotations in the document. For this, several
+ * <code>iterator()</code> and <code>iterable()</code> methods are provided, which let the user to iterate over all the annotations,
+ * or some of them.
  *
  * <p>
  * Date: 30 May 2017
@@ -24,12 +33,26 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 {
 	private static final long serialVersionUID = -6556213855743551941L;
 	
+	/**
+	 * Constructor with the document-name and the document-text.
+	 * <br>
+	 * Note that a default {@link DocumentCollection} will be created for this document.
+	 * @param name document-name
+	 * @param text document-text
+	 */
 	@DapAPI
 	public Document(String name, String text)
 	{
 		this(name, new DocumentCollection(), text);
 	}
 	
+	/**
+	 * Constructor with the document-name, the {@link DocumentCollection} into which this document will be inserted,
+	 * and the document-text.
+	 * @param name document-name
+	 * @param documentCollection the {@link DocumentCollection} into which this document will be inserted
+	 * @param text document-text
+	 */
 	@DapAPI
 	public Document(String name, DocumentCollection documentCollection, String text)
 	{
@@ -48,24 +71,39 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 	}
 	
 
+	/**
+	 * Get the document-name. The document-name uniquely identifies the document within its {@link DocumentCollection}.
+	 */
 	@DapAPI
 	public String getName()
 	{
 		return name;
 	}
 
+	/**
+	 * Get the {@link DocumentCollection} which this document belongs to.
+	 */
 	@DapAPI
 	public DocumentCollection getDocumentCollection()
 	{
 		return documentCollection;
 	}
-	
+
+	/**
+	 * Get the text of this document.
+	 */
 	@DapAPI
 	public String getText()
 	{
 		return text;
 	}
 
+	/**
+	 * Set the given feature to the document.
+	 * If a feature is already set for this name, it will be replaced.
+	 * @param name the feature-name (within the scope of this document)
+	 * @param feature the feature itself.
+	 */
 	@DapAPI
 	public synchronized void setFeature(String name, Feature feature)
 	{
@@ -74,6 +112,10 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 		features.put(name, feature);
 	}
 	
+	/**
+	 * Remove the feature, mapped to the given name, from this document.
+	 * @param name the feature-name
+	 */
 	@DapAPI
 	public synchronized void removeFeature(String name)
 	{
@@ -81,12 +123,23 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 		features.remove(name);
 	}
 	
+	/**
+	 * Get a map with all the features in this document.
+	 */
 	@DapAPI
 	public synchronized Map<String, Feature> getFeatures()
 	{
 		return Collections.unmodifiableMap(features);
 	}
 	
+	/**
+	 * Add an annotation to the document. Annotate the text-span between the given begin and end indexes, and attach the given
+	 * {@link AnnotationContents} to this newly-created annotation.
+	 * @param begin the character-index specifying where the new annotation begins.
+	 * @param end the character-index specifying where the new annotation ends, i.e., the first character the follows the annotation.
+	 * @param annotationContents {@link AnnotationContents} to be attached to this newly-created annotation.
+	 * @return An {@link AnnotationReference}, which uniquely identifies this annotation.
+	 */
 	@DapAPI
 	public synchronized <T extends AnnotationContents> AnnotationReference addAnnotation(int begin, int end, T annotationContents)
 	{

@@ -5,7 +5,15 @@ import java.io.Serializable;
 import org.dap.common.DapAPI;
 
 /**
+ * Instance of this class are objects that uniquely identify annotations. They are used to find annotations in the methods:
+ * {@link Document#findAnnotation(AnnotationReference)} and {@link DocumentCollection#findAnnotation(AnnotationReference)}.
  * 
+ * <p>
+ * Note that non of the methods of this class are part of the public-API. Only the class itself.
+ * 
+ * <p>
+ * Instances of this class are created and returned by {@link Document#addAnnotation(int, int, AnnotationContents)}, and
+ * {@link Annotation#getAnnotationReference()}.
  *
  * <p>
  * Date: 31 May 2017

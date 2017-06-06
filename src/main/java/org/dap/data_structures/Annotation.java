@@ -24,6 +24,17 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 {
 	private static final long serialVersionUID = 1750027436005437477L;
 	
+	/**
+	 * Constructor with document into which the annotation is added, being-index, end-index, unique-id and annotation-contents.
+	 * This constructor should be called by {@link Document}, but by nobody else. Not that this constructor is not part
+	 * of the public-API.
+	 * 
+	 * @param document the document into which this annotation is added.
+	 * @param begin begin index
+	 * @param end end index
+	 * @param uniqueId unique id within the document
+	 * @param annotationContents the annotation-contents of this annotation.
+	 */
 	Annotation(Document document, int begin, int end, long uniqueId, T annotationContents)
 	{
 		super();
@@ -38,18 +49,27 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 		this.coveredText = document.getText().substring(begin, end);
 	}
 	
+	/**
+	 * Get the document in which this annotation resides.
+	 */
 	@DapAPI
 	public Document getDocument()
 	{
 		return document;
 	}
 
+	/**
+	 * Get the begin-index (the index of the character where this annotation begins).
+	 */
 	@DapAPI
 	public int getBegin()
 	{
 		return begin;
 	}
 
+	/**
+	 * Get the end-index (the index of the character after this annotation).
+	 */
 	@DapAPI
 	public int getEnd()
 	{
@@ -62,18 +82,30 @@ public final class Annotation<T extends AnnotationContents> implements UniquelyI
 		return uniqueId;
 	}
 
+	/**
+	 * Get the annotation-contents.
+	 */
 	@DapAPI
 	public T getAnnotationContents()
 	{
 		return annotationContents;
 	}
 	
+	/**
+	 * Get an {@link AnnotationReference} that uniquely identifies this annotation in the context of the {@link DocumentCollection}
+	 * that contains the {@link Document} that contains this annotation.
+	 * this {@link AnnotationReference} can be used as the argument of {@link Document#findAnnotation(AnnotationReference)} and
+	 * {@link DocumentCollection#findAnnotation(AnnotationReference)}.
+	 */
 	@DapAPI
 	public AnnotationReference getAnnotationReference()
 	{
 		return new AnnotationReference(document.getName(), uniqueId);
 	}
 	
+	/**
+	 * Get the text covered (annotated) by this annotation.
+	 */
 	@DapAPI
 	public String getCoveredText()
 	{
