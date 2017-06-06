@@ -1,4 +1,4 @@
-15 Minutes tutorial
+20 Minutes tutorial
 ===================
 
 This tutorial covers 100% of the _Document Analysis Platform_
@@ -145,9 +145,9 @@ for (Annotation<?> annotation : document.iterable(Sentence.class))
 }
 ```
 will print:
-```text
+<pre>
 This is a document.
-```
+</pre>
 
 ```java
 for (Annotation<?> annotation : document.iterable(Token.class))
@@ -156,12 +156,12 @@ for (Annotation<?> annotation : document.iterable(Token.class))
 }
 ```
 will print
-```text
+<pre>
 This
 is
 a
 document
-```
+</pre>
 
 And just for the sake of completeness:
 ```java
@@ -171,13 +171,13 @@ for (Annotation<?> annotation : document)
 }
 ```
 will print
-```text
+<pre>
 This
 This is a document.
 is
 a
 document
-```
+</pre>
 
 It is also possible to narrow down the iteration to a portion of the document, by providing the arguments `begin` and `end` to the `iterator()` and `iterable()` methods. These arguments specify that only annotations that begin where specified by the `begin` parameter or afterwards, and end where specified by the `end` parameter or before, will be returned.
 
@@ -189,10 +189,10 @@ for (Annotation<?> annotation : document.iterable(AnnotationContents.class, 0, 8
 }
 ```
 will print
-```text
+<pre>
 This
 is
-```
+</pre>
 
 ### Document Features
 In addition to annotations, documents may also have _features_, which hold some general information about the document. Features are totally user-defined, by implementing the interface `org.dap.data_structures.Feature`.
@@ -263,3 +263,28 @@ public class MyAnnotator extends Annotator
 An `AggregateAnnotator` is simply an `Annotator` which is constructed with a list of `Annotator`s, and runs them sequentially for each document. In other words, its `annotate()` method calls the `annotate()` methods of all the annotators it has been constructed with.
 
 ### Split and Merge Annotator
+In some scenarios the processing of a document involves the generation of multiple new documents. For example, dividing a document into sections, and make each section a document of its own. The platform provides the abstract class `Splitter` for such scenarios.
+
+While `Splitter` by itself does not seem to add any valuable functionality, its benefit shows up when used as part of the split-and-merge flow, which is as follows:
+
+1. (Split phase) New documents are generated for the input document.
+2. (Annotation phase) For each newly generated document, some processing is performed.
+3. (Merge phase) All the newly generated (and processed) documents are collected (accumulated), and contribute to the processing of the original document.
+
+For example: assume that the given document is a query.
+
+1. In the split phase, a search engine is queried with the document's text. Results are retrieved, and a new document is generated for each of those results.
+2. The annotation phase is an aggregate annotator that processes a result, and assigns it a score (as a `Feature`).
+3. In the merge phase, the best result is selected. A new document is created for that best-result (using, e.g., `DocumentCopier`), and added to the `DocumentCollection` of the original document.
+
+Another example: we want to find the __protagonist__ (the most prominent entity) of each paragraph in the document. Assume we have an annotator that finds the protagonist of an entire document. We can use this annotator as part of a split-and-merge flow as follows:
+
+1. Split the given document into paragraphs. A new document is created for each paragraph.
+2. Use that annotator on each paragraph (that is provided to the annotator as a stand-alone `Document`).
+3. Collect the results. We can add (in the original document) a new `Annotation` for each paragraph, with a field that describes its protagonist.
+
+These are just two examples, but many others can be thought of.
+
+To implement the split-and-merge flow: implement `Splitter`, implement `Merger`, and implement a `MergerFactory`that returns your `Merger` implementation. Then, create a `SplitMergeAnnotator` that uses your implementations. Please refer to `Merger`'s _JavaDoc_ documentation for the exact details.
+
+One elegant property of `SplitMergeAnnotator` is that it is a subclass of `Annotator`, and can be used wherever an `Annotator` is used, including as part of `AggregateAnnotator`'s input.
