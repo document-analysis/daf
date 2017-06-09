@@ -194,6 +194,20 @@ This
 is
 </pre>
 
+### Safety protocols
+__Documents must not change when iterating over annotations.__
+Adding or removing annotations while iterating over the document's annotations is a logical error. The result of such an operation is undefined. It might result in some unexplained exception, or, even worse, wrong annotations returned from the iterator.
+
+Example:
+```java
+for (Annotation<?> annotation : document)
+{
+	document.removeAnnotation(annotation); // ERROR!
+}
+```
+
+The aforementioned rule must be kept also when working with multiple threads. __One thread must not change a document, when another thread iterates over that document.__
+
 ### Document Features
 In addition to annotations, documents may also have _features_, which hold some general information about the document. Features are totally user-defined, by implementing the interface `org.dap.data_structures.Feature`.
 
