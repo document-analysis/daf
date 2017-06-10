@@ -22,6 +22,13 @@ import org.dap.index.Index;
  * The most important functionality of {@link Document}s is to iterate over annotations in the document. For this, several
  * <code>iterator()</code> and <code>iterable()</code> methods are provided, which let the user to iterate over all the annotations,
  * or some of them.
+ * 
+ * <p>
+ * <b>Documents must not change when iterating over annotations.</b>
+ * Adding or removing annotations while iterating over the document's annotations is a logical error.
+ * The result of such an operation is undefined.
+ * It might result in some unexplained exception, or, even worse, wrong annotations returned from the iterator.
+ * See the tutorial for more information.
  *
  * <p>
  * Date: 30 May 2017
