@@ -208,6 +208,19 @@ for (Annotation<?> annotation : document)
 
 The aforementioned rule must be kept also when working with multiple threads. __One thread must not change a document, when another thread iterates over that document.__
 
+By the way, the correct way to accomplish that goal of the example-code above is:
+```java
+Set<Annotation<?>> annotations = new LinkedHashSet<>();
+for (Annotation<?> annotation : document)
+{
+	annotations.add(annotation);
+}
+for (Annotation<?> annotation : annotations)
+{
+	document.removeAnnotation(annotation);
+}
+```
+
 ### Document Features
 In addition to annotations, documents may also have _features_, which hold some general information about the document. Features are totally user-defined, by implementing the interface `org.dap.data_structures.Feature`.
 
