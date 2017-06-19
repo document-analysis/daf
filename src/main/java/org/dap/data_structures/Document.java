@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -245,10 +247,7 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 	@DapAPI
 	public Iterator<Annotation<? extends AnnotationContents>> iterator(Class<? extends AnnotationContents> superClass, int begin, int end)
 	{
-		if ((begin<0)||(end<0)||(end<begin)) {throw new DapException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
-		if (null==superClass) {throw new DapException("Null superClass");}
-		
-		return index.iterator(superClass, begin, end);
+		return iterable(superClass, begin, end).iterator();
 	}
 	
 	@DapAPI
@@ -271,21 +270,32 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 	}
 	
 	@DapAPI
-	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin, int end)
+	public synchronized Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin, int end)
 	{
-		return ()->iterator(superClass, begin, end);
+		if ((begin<0)||(end<0)||(end<begin)) {throw new DapException("Illegal begin / end value(s): begin="+begin+". end="+end+".");}
+		if (null==superClass) {throw new DapException("Null superClass");}
+
+		// Replicate the annotations in a list. This way it is safe to add and remove annotations while iterating over annotations.
+		List<Annotation<? extends AnnotationContents>> list = new LinkedList<>();
+		Iterator<Annotation<? extends AnnotationContents>> iterator = index.iterator(superClass, begin, end);
+		while (iterator.hasNext())
+		{
+			list.add(iterator.next());
+		}
+
+		return Collections.unmodifiableList(list); // Remove should not be supported, since it does not affect the document, but the replica.
 	}
 	
 	@DapAPI
 	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass, int begin)
 	{
-		return ()->iterator(superClass, begin);
+		return iterable(superClass, begin, text.length());
 	}
 	
 	@DapAPI
 	public Iterable<Annotation<? extends AnnotationContents>> iterable(Class<? extends AnnotationContents> superClass)
 	{
-		return ()->iterator(superClass);
+		return iterable(superClass, 0, text.length());
 	}
 	
 	
