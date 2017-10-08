@@ -220,6 +220,7 @@ public final class Document implements Serializable, Iterable<Annotation<?>>
 	@DapAPI
 	public synchronized Annotation<?> findAnnotation(AnnotationReference annotationReference, boolean inThisDocumentOnly)
 	{
+		if (null==annotationReference) { throw new DapException("A null reference has been given to findAnnotation() function."); }
 		if (name.equals(annotationReference.getDocumentName()))
 		{
 			if (annotationsById.containsKey(annotationReference.getAnnotationUniqueId()))
