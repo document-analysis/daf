@@ -35,6 +35,25 @@ Users can start working with DAP right-away with dozens of state-of-the-art NLP 
 A demo is provided in [DAP-DKPro_1_8-demo](https://github.com/document-analysis/dap-dkpro_1_8-demo).
 
 
+Usage in Maven
+--------------
+The project has been uploaded to Maven central repository.
+
+In a Maven project, add the following:
+```maven
+<dependency>
+  <groupId>com.github.document-analysis</groupId>
+  <artifactId>dap</artifactId>
+  <version>0.1</version>
+</dependency>
+```
+
+To get started, related projects should be imported as well. See:
+1. [dap-uimafit](https://github.com/document-analysis/dap-uimafit)
+2. [dap-dkpro_1_8](https://github.com/document-analysis/dap-dkpro_1_8)
+3. [dap-dkpro_1_8-demo](https://github.com/document-analysis/dap-dkpro_1_8-demo)
+
+
 Your first steps
 ------------------
 Start by reading the [20-minutes-tutorial](https://github.com/document-analysis/dap/blob/master/20_minutes_tutorial.md).
