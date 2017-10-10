@@ -4,7 +4,7 @@
 
 	<groupId>com.github.document-analysis</groupId>
 	<artifactId>dap</artifactId>
-	<version>0.1</version>
+	<version>0.1.1</version>
 	<name>dap</name>
 	<description>Document Analysis Platform</description>
 	<url>https://github.com/document-analysis/dap</url>
