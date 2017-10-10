@@ -44,7 +44,7 @@ In a Maven project, add the following:
 <dependency>
   <groupId>com.github.document-analysis</groupId>
   <artifactId>dap</artifactId>
-  <version>0.1</version>
+  <version>0.1.1</version>
 </dependency>
 ```
 
